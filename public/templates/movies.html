@@ -1,8 +1,8 @@
- <div id="primary">
+ <div>
        <div class="container">
          <div ng-repeat="movie in movies" class="col-md-4 col-sm-6 col-xs-12">
             <div class="movie-container">
-              <a href="movie/{{movie.youtubeid}}">
+              <a href="/movie/{{movie.youtubeId}}">
                 <div class="thumbnail">
                   <div class="poster img-rounded">
                     <img ng-src="{{movie.posterUrl}}" class="" alt="{{movie.title}}" />
