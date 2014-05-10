@@ -1,6 +1,7 @@
 Popcorn::Application.routes.draw do
   root 'popcorn#index'
   get "popcorn/index"
+  match '*path' => 'popcorn#index', :via => [:get, :post]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -55,5 +56,4 @@ Popcorn::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  match '*path' => 'popcorn#index', :via => [:get, :post]
 end
