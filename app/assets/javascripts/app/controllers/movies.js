@@ -1,15 +1,24 @@
 angular.module('popcornApp.controllers')
 .controller('MoviesController', 
-function($scope, MoviesService) {
+function($scope, MoviesService, Favorite, UserService) {
   MoviesService.movies().then(function(movies) {
       $scope.movies = movies;
   })
   
   $scope.addFavorite = function(movie) {
-    movie.isFavorite = true;
+  	UserService.currentUser().then(function(user) {
+  		Favorite.createForUserAndMovie(user, movie).then(function(){
+  			movie.isFavorite = true;
+  		});
+  	});
+    
   };
 
   $scope.removeFavorite = function(movie) {
-    movie.isFavorite = false;
+    UserService.currentUser().then(function(user) {
+  		Favorite.removeFavorite(user, movie).then(function(){
+  			movie.isFavorite = false;
+  		});
+  	});
   };
 });
