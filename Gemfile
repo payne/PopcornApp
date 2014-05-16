@@ -13,6 +13,7 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 gem 'underscore-rails', '1.5.2'
 gem 'devise', "=3.2.2"
+gem 'angularjs-rails-resource', "=0.2.5"
 group :doc do
   gem 'sdoc', require: false
 end

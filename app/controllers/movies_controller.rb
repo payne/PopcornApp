@@ -4,8 +4,8 @@ class MoviesController < ApplicationController
 	def create
 		@movie = Movie.new(movie_params)
 		if @movie.save
-			render status: :create,
-			json: @movie.as_json
+			render status: :ok,
+				json: @movie.as_json
 		else
 			render status: :unprocesable_entity,
 				json: @movie.errors.as_json
@@ -18,7 +18,7 @@ class MoviesController < ApplicationController
 			Movie.where(:id => params[:id]).first
 		if @movie
 			render status: :ok,
-				json @movie.as_json
+				json: @movie.as_json
 		else
 			render status: :not_found,
 				json: {
