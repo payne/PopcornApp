@@ -5,7 +5,8 @@ angular.module('popcornApp', [
 	'popcornApp.controllers',
 	'popcornApp.services',
 	'popcornApp.directives',
-	'popcornApp.resources'
+	'popcornApp.resources',
+    'popcornApp.interceptors'
 ])
 .config(function($routeProvider, $locationProvider) {
 	$routeProvider
@@ -22,6 +23,25 @@ angular.module('popcornApp', [
         .when('/user/:user_id', {
             controller: "ProfileController",
             templateUrl: "/templates/profile.html"
+        }).when('/user/:user_id',
+        {
+            templateUrl: '/templates/profile.html',
+            controller: 'ProfileController',
+            resolve: {
+                user:
+                    function($q, $route, $location, AuthService) {
+                        var d = $q.defer();
+
+                        AuthService.currentUser().then(function(user) {
+                            if(user && user.id == $route.current.params.user_id) {
+                                d.resolve();
+                            } else {
+                                $location.path('/');
+                            }
+                        });
+                        return d.promise;
+                    }
+            }
         })
 		.when('/',
 		{
@@ -30,4 +50,7 @@ angular.module('popcornApp', [
 		})
 		.otherwise({redirectTo: '/'});
 	$locationProvider.html5Mode(true);
-});
+
+}).config(function($httpProvider) {
+        $httpProvider.interceptors.push('UserAuthInterceptor');
+    });

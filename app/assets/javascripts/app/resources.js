@@ -92,7 +92,6 @@ angular.module('popcornApp.resources', ['rails'])
             });
             resource.prototype.favoriteMovies = function() {
                 var self = this;
-
                 return resource.$get(self.$url('movies'))
                         .then(function(movies){
                         self.favoriteMovies = movies;

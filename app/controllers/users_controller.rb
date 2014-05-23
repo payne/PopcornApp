@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
-
+  respond_to :json
+  before_filter :authenticate_user_from_token!, :only => [:index, :movies]
   def index
+    return permission_denied unless (params[:id].to_s == @current_user.id.to_s) || (params[:email].to_s == @current_user.email.to_s)
+
     @users = User.where(params.permit(:id,:email))
 
     if @users
@@ -14,6 +17,7 @@ class UsersController < ApplicationController
     end
   end
   def movies
+    return permission_denied unless params[:id].to_s == @current_user.id.to_s
     @user = User.where(:id => params[:id]).first
 
     if @user
