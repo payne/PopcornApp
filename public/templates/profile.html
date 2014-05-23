@@ -1,0 +1,22 @@
+<div class="profile jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>{{user.email}}</h1>
+                <h2>Favorites</h2>
+                <div class="favorites">
+                   <div ng-if="!favoriteMovies">
+                       No Favorites
+                   </div>
+                    <div ng-if="favoriteMovies">
+                      <ul>
+                          <li ng-repeat="movie in favoriteMovies">
+                              {{movie.title}}
+                          </li>
+                      </ul>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>x
