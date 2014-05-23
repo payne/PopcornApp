@@ -1,7 +1,10 @@
 Popcorn::Application.routes.draw do
-  devise_for :users
   root 'popcorn#index'
-  get "popcorn/index"
+  
+  devise_for :users, :controllers => {
+    registrations: "users/registrations",
+    sessions: "users/sessions"
+  }
   resources :movies
   resources :favorites
   match '*path' => 'popcorn#index', :via => [:get, :post]

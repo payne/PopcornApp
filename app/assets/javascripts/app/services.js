@@ -57,20 +57,55 @@ angular.module('popcornApp.services', [])
 	  }	
 	})
 .service('UserService', 
-	function($q, $cookieStore, $rootScope) {
+	function($q, $cookieStore, $rootScope, $http) {
 		this._user = null;
 		var service = this;
-
-		this.login = function(email) {
-			var d = $q.defer();
-			var user = {
-				email: email,
-				id: 1
-			};
+		this.setCurrentUser = function(user){
 			service._user = user;
 			$cookieStore.put('user', user);
 			$rootScope.$broadcast("user:set", user);
-			d.resolve(user);
+		}
+		this.signup = function(userParams){
+			var d = $q.defer();
+			$http({
+				url: "/users",
+				method: "POST",
+				data: {
+					user: userParams
+				}
+			}).success(function(response){
+				var user = response.data.user;
+				user.auth_token = response.data.auth_token;
+
+				service.setCurrentUser(user);
+
+				d.resolve(user);
+			}).error(function(reason){
+				d.reject(reason);
+			});
+			return d.promise;
+		}
+		this.login = function(userParams) {
+			var d = $q.defer();
+			$http({
+				url: "/users/sign_in",
+				method: "POST",
+				data: {
+					user: userParams
+				}
+			}).success(function(response) {
+				if(response.success){
+					var user = response.data.user;
+					user.auth_token = response.data.auth_token;
+					service.setCurrentUser(user);
+					d.resolve(user);
+				} else {
+					d.reject(response);
+				}
+			}).error(function(reason){
+				d.reject(reason);
+			});
+			
 			return d.promise;
 		};
 		
