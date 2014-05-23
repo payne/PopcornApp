@@ -1,8 +1,14 @@
 angular.module('popcornApp.controllers')
 .controller('MoviesController', 
 function($scope, MoviesService, Favorite, UserService, $q) {
-  MoviesService.movies().then(function(movies){
-    $scope.movies = movies;
-  });
+ 
+    $scope.$watch('chart', function(newValue, oldValue) {
+      if(newValue) {
+        MoviesService.movies(newValue).then(function(movies) {
+          $scope.movies = movies;
+        });
+      }
+    });
+ $scope.chart = "most_popular";
 
 });
