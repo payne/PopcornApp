@@ -10,6 +10,7 @@ gem 'angularjs-rails', "=1.2.6"
 gem 'bootstrap-sass-rails', "=3.0.3.0"
 gem 'rails_12factor', group: :production
 gem 'uglifier', '=2.5.0'
+gem 'ngmin-rails', '=0.4.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
