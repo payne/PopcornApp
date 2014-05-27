@@ -1,0 +1,8 @@
+{
+    "name": "popcorn",
+    "version": "0.0.1",
+    "devDependencies": {
+        "grunt": "~0.4.2",
+        "grunt-ajax-seo": "~0.1.0"
+    }
+}
